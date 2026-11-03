@@ -1,5 +1,7 @@
 # AFFiNE MCP Server
 
+**CredCore fork:** For the pinned local pilot, use the [Claude Code setup guide](docs/claude-code-local.md). It includes the patched dependency lockfile, restricted launcher, personal SSO login, and approval settings. The upstream installation instructions below expose a broader tool surface.
+
 A Model Context Protocol (MCP) server for AFFiNE. It exposes AFFiNE workspaces and documents to AI assistants over stdio (default) or HTTP (`/mcp`) and supports both AFFiNE Cloud and self-hosted deployments.
 
 [![Version](https://img.shields.io/badge/version-3.11.0-blue)](https://github.com/dawncr0w/affine-mcp-server/releases)

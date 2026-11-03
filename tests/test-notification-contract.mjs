@@ -208,14 +208,14 @@ expectEqual(requests[2].variables.pagination, {
 }, "cursor GraphQL pagination variables");
 
 const invalidCases = [
-  [{ first: 0 }, /greater than or equal to 1/, "first lower bound"],
-  [{ first: 101 }, /less than or equal to 100/, "first upper bound"],
-  [{ first: 1.5 }, /integer/, "first integer bound"],
-  [{ offset: -1 }, /greater than or equal to 0/, "offset lower bound"],
-  [{ offset: 1.5 }, /integer/, "offset integer bound"],
-  [{ offset: 2_147_483_648 }, /less than or equal to 2147483647/, "offset GraphQL bound"],
-  [{ after: "   " }, /at least 1 character/, "empty cursor"],
-  [{ after: "x".repeat(2_049) }, /at most 2048 character/, "cursor length bound"],
+  [{ first: 0 }, /greater than or equal to 1|>=1\b/, "first lower bound"],
+  [{ first: 101 }, /less than or equal to 100|<=100\b/, "first upper bound"],
+  [{ first: 1.5 }, /integer|expected int\b/, "first integer bound"],
+  [{ offset: -1 }, /greater than or equal to 0|>=0\b/, "offset lower bound"],
+  [{ offset: 1.5 }, /integer|expected int\b/, "offset integer bound"],
+  [{ offset: 2_147_483_648 }, /less than or equal to 2147483647|<=2147483647\b/, "offset GraphQL bound"],
+  [{ after: "   " }, /at least 1 character|>=1 characters/, "empty cursor"],
+  [{ after: "x".repeat(2_049) }, /at most 2048 character|<=2048 characters/, "cursor length bound"],
   [{ offset: 0, after: "cursor" }, /mutually exclusive/, "offset/after conflict"],
 ];
 for (const [args, pattern, label] of invalidCases) {

@@ -139,6 +139,7 @@ These controls are environment-only and are not read from the saved config file.
 | Variable | Purpose |
 | --- | --- |
 | `AFFINE_TOOL_PROFILE` | Environment-only predefined tool surface profile (`full`, `read_only`, `core`, `authoring`) |
+| `AFFINE_LOCAL_ENFORCE_DEFAULT_WORKSPACE` | Local CredCore pilot patch: when `true`, tool calls require a configured default workspace and reject an explicit different `workspaceId`. Used with the restricted core profile and disabled workspace enumeration; this is not a general per-document access policy. |
 | `AFFINE_DISABLED_GROUPS` | Environment-only comma-separated tool groups to disable |
 | `AFFINE_DISABLED_TOOLS` | Environment-only exact canonical tool names to disable |
 

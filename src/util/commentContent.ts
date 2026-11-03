@@ -2,12 +2,20 @@ import { z } from "zod";
 import { secureAffineId } from "./random.js";
 
 // AFFiNE 0.27.4's comment editor consumes a BlockSuite DocSnapshot, not { text }.
-const BlockSnapshot: z.ZodTypeAny = z.lazy(() => z.object({
+type BlockSnapshotData = {
+  type: "block";
+  id: string;
+  flavour: string;
+  version?: number;
+  props: Record<string, unknown>;
+  children: BlockSnapshotData[];
+};
+const BlockSnapshot: z.ZodType<BlockSnapshotData> = z.lazy(() => z.object({
   type: z.literal("block"),
   id: z.string(),
   flavour: z.string(),
   version: z.number().optional(),
-  props: z.record(z.unknown()),
+  props: z.record(z.string(), z.unknown()),
   children: z.array(BlockSnapshot),
 }).passthrough());
 

@@ -1,5 +1,9 @@
 # Node dependencies
 node_modules/
+.local/
+/local-*-results.json
+/local-verification.json
+/local-audit.json
 
 # TypeScript build output
 dist/

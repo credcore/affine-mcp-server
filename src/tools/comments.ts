@@ -7,7 +7,7 @@ import { BoundedOffset, BoundedPageSize } from "../util/inputSchemas.js";
 
 const CommentContent = z.union([
   z.string(),
-  z.record(z.unknown()),
+  z.record(z.string(), z.unknown()),
 ]).describe("Plain comment text, a legacy { text } object, or a native AFFiNE { snapshot } payload. Plain text is converted to a renderable BlockSuite snapshot.");
 const CommentPageSize = BoundedPageSize.describe("Maximum number of comments to return from the AFFiNE pagination connection (1-200).");
 const CommentOffset = BoundedOffset.describe("Zero-based offset used by AFFiNE pagination (maximum 1,000,000). Do not combine with after unless the AFFiNE API requires it.");

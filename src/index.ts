@@ -23,7 +23,7 @@ import { existsSync } from "fs";
 import { createToolFilter, toolAnnotationsFor } from "./toolSurface.js";
 import { toolOutputSchemaFor } from "./toolOutputSchemas.js";
 import { coordinateTool } from "./toolCoordination.js";
-import { stripSchemaDialect, withToolErrors } from "./util/mcp.js";
+import { stripSchemaDialect, toolError, withToolErrors } from "./util/mcp.js";
 import { resolveConfiguredAuth } from "./util/configuredAuth.js";
 import {
   assertOAuthServiceWritePolicy,
@@ -174,7 +174,19 @@ async function buildServer() {
           ...toolAnnotationsFor(name),
           ...(options?.annotations || {}),
         },
-      }, withToolErrors(coordinated.handler, {
+      }, withToolErrors(async (args: Record<string, any>, extra: any) => {
+        // This local pilot is restricted to its configured workspace even
+        // when a model supplies an explicit workspaceId override.
+        if (process.env.AFFINE_LOCAL_ENFORCE_DEFAULT_WORKSPACE === "true") {
+          if (!config.defaultWorkspaceId) {
+            return toolError("The local pilot requires a configured workspace.", { code: "access_denied" });
+          }
+          if (args.workspaceId !== undefined && args.workspaceId !== config.defaultWorkspaceId) {
+            return toolError("This local pilot only permits the configured workspace.", { code: "access_denied" });
+          }
+        }
+        return coordinated.handler(args, extra);
+      }, {
         toolName: name,
         authMode: config.authMode,
         readOnly: Boolean(toolAnnotationsFor(name).readOnlyHint),

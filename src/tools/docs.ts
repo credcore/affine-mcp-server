@@ -411,7 +411,7 @@ const WorkspaceId = z.string().min(1, "workspaceId required").describe("AFFiNE w
 const DocId = z.string().min(1, "docId required").describe("AFFiNE document id.");
 const TextDeltaInput = z.object({
   insert: z.string().describe('Text to insert. For a LinkedPage reference, use one ASCII space per reference (insert: " ").'),
-  attributes: z.record(z.unknown()).optional().describe('Inline attributes. For a LinkedPage reference, use { reference: { type: "LinkedPage", pageId: "<docId>" } }; AFFiNE resolves the page label from pageId.'),
+  attributes: z.record(z.string(), z.unknown()).optional().describe('Inline attributes. For a LinkedPage reference, use { reference: { type: "LinkedPage", pageId: "<docId>" } }; AFFiNE resolves the page label from pageId.'),
 });
 const RichTextInput = z.union([z.string(), z.array(TextDeltaInput)]);
 const MarkdownContent = z.string().min(1, "markdown required").describe('Markdown content to import, append, replace, or export-roundtrip. Inline page references use [label](LinkedPage:<docId>) and import as native AFFiNE reference nodes.');
@@ -8740,7 +8740,7 @@ export function registerDocTools(
         workspaceId: z.string().optional().describe("Workspace ID (optional if default set)"),
         docId: DocId.describe("Document ID containing the database"),
         databaseBlockId: z.string().min(1).describe("Block ID of the affine:database block"),
-        cells: z.record(z.unknown()).describe('Map of column name (or column ID) to cell value. Rich-text and title values accept strings or delta arrays. For LinkedPage references, use insert: " " with reference.type="LinkedPage" and the target pageId; visible labels are resolved by AFFiNE. For select columns, pass the display label (option auto-created if new).'),
+        cells: z.record(z.string(), z.unknown()).describe('Map of column name (or column ID) to cell value. Rich-text and title values accept strings or delta arrays. For LinkedPage references, use insert: " " with reference.type="LinkedPage" and the target pageId; visible labels are resolved by AFFiNE. For select columns, pass the display label (option auto-created if new).'),
         linkedDocId: z.string().optional().describe("Link this row to an existing doc by ID. The row will open the linked doc in center peek when clicked."),
       },
     },
@@ -8991,7 +8991,7 @@ export function registerDocTools(
         docId: DocId.describe("Document ID containing the database"),
         databaseBlockId: z.string().min(1).describe("Block ID of the affine:database block"),
         rowBlockId: z.string().min(1).describe("Row paragraph block ID"),
-        cells: z.record(z.unknown()).describe('Map of column name (or column ID) to new cell value. Rich-text and title values accept strings or delta arrays. For LinkedPage references, use insert: " " with reference.type="LinkedPage" and the target pageId; visible labels are resolved by AFFiNE. Use `title` for the built-in row title.'),
+        cells: z.record(z.string(), z.unknown()).describe('Map of column name (or column ID) to new cell value. Rich-text and title values accept strings or delta arrays. For LinkedPage references, use insert: " " with reference.type="LinkedPage" and the target pageId; visible labels are resolved by AFFiNE. Use `title` for the built-in row title.'),
         createOption: z.boolean().optional().describe("For select and multi-select columns, create the option label if it does not exist (default true)"),
         linkedDocId: z.string().optional().describe("Link this row to an existing doc by ID. The row will open the linked doc in center peek when clicked."),
       },
@@ -9113,7 +9113,7 @@ export function registerDocTools(
         docId: DocId.describe("Document ID containing the database"),
         intent: DatabaseIntent.describe("Declarative database intent to compose."),
         title: z.string().optional().describe("Optional database title. Defaults to the intent preset title."),
-        seedRows: z.array(z.record(z.unknown())).optional().describe("Optional starter rows. If omitted, the preset starter rows are used."),
+        seedRows: z.array(z.record(z.string(), z.unknown())).optional().describe("Optional starter rows. If omitted, the preset starter rows are used."),
         placement: z.object({
           parentId: z.string().optional(),
           afterBlockId: z.string().optional(),

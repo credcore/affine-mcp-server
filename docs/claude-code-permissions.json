@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__affine__current_user",
+      "mcp__affine__export_doc_markdown",
+      "mcp__affine__find_doc_by_title",
+      "mcp__affine__get_capabilities",
+      "mcp__affine__get_doc",
+      "mcp__affine__get_doc_icon",
+      "mcp__affine__get_workspace",
+      "mcp__affine__list_children",
+      "mcp__affine__list_docs",
+      "mcp__affine__list_docs_by_tag",
+      "mcp__affine__list_tags",
+      "mcp__affine__read_database_cells",
+      "mcp__affine__read_database_columns",
+      "mcp__affine__read_doc",
+      "mcp__affine__search_docs"
+    ],
+    "ask": [
+      "mcp__affine__add_database_column",
+      "mcp__affine__add_database_row",
+      "mcp__affine__add_tag_to_doc",
+      "mcp__affine__append_block",
+      "mcp__affine__append_markdown",
+      "mcp__affine__create_doc",
+      "mcp__affine__create_doc_from_markdown",
+      "mcp__affine__move_block",
+      "mcp__affine__remove_tag_from_doc",
+      "mcp__affine__update_block",
+      "mcp__affine__update_database_row",
+      "mcp__affine__update_doc_icon",
+      "mcp__affine__update_doc_title",
+      "mcp__affine__update_table_cell",
+      "mcp__affine__update_table_column_widths"
+    ]
+  }
+}
